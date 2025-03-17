@@ -1,4 +1,4 @@
-import pool from "../database";
+import pool from "../db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 

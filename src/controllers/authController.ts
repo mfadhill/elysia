@@ -13,3 +13,4 @@ export const login = async ({ body }: { body: { username: string; password: stri
     }
     return await loginUser(body.username, body.password);
 };
+
