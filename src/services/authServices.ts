@@ -19,14 +19,12 @@ export const registerUser = async (username: string, password: string) => {
 
 export const loginUser = async (username: string, password: string) => {
     const { rows } = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
-    const user = rows[0]; 
+    const user = rows[0];
 
     if (!user) return { success: false, message: "User tidak ditemukan" };
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) return { success: false, message: "Password salah" };
 
-    const token = jwt.sign({ id: user.id, username: user.username }, SECRET_KEY, { expiresIn: "1h" });
-
-    return { success: true, token };
+    return { success: true, user };
 };
