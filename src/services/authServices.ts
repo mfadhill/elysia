@@ -26,5 +26,16 @@ export const loginUser = async (username: string, password: string) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) return { success: false, message: "Password salah" };
 
-    return { success: true, user };
+    const token = jwt.sign(
+        { id: user.id, username: user.username },
+        SECRET_KEY,
+        { expiresIn: "24h" }
+    );
+
+    return {
+        success: true,
+        message: "Login berhasil",
+        token,
+        user: { id: user.id, username: user.username }
+    };
 };

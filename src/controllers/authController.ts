@@ -9,7 +9,6 @@ export const register = async ({ body }: { body: { username: string; password: s
     return await registerUser(body.username, body.password);
 };
 
-
 export const login = async ({ body }: { body: { username: string; password: string } }) => {
     if (!body.username || !body.password) {
         return { success: false, message: "Username dan password harus diisi" };
@@ -28,6 +27,10 @@ export const login = async ({ body }: { body: { username: string; password: stri
     );
 
     return { success: true, token };
+};
+
+export const logout = async ({ user }: { user: any }) => {
+    return { success: true, message: `User ${user.username} logged out successfully` };
 };
 
 

@@ -16,7 +16,6 @@ export const createBook = async (data: { title: string; author: string; year: nu
     return inserted[0];
 };
 
-
 export const updateBook = async (
     id: number,
     data: Partial<{ title: string; author: string; year: number }>,
@@ -36,19 +35,24 @@ export const updateBook = async (
         [title, author, year, id]
     );
 
-    return result.rows[0]; // Return updated data
+    return result.rows[0];
 };
 
 export const deleteBook = async (id: number, userId: number) => {
+    console.log(`Deleting book id: ${id}, userId: ${userId}`);
+
     const existing = await pool.query(
         "SELECT * FROM books WHERE id = $1 AND user_id = $2",
         [id, userId]
     );
+    console.log("Existing book:", existing.rows);
+
     if (existing.rows.length === 0) return null;
 
     const result = await pool.query(
         "DELETE FROM books WHERE id = $1 RETURNING *",
         [id]
     );
-    return result.rows[0]; // Return deleted data
+    return result.rows[0];
 };
+
